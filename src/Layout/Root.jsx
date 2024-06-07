@@ -4,11 +4,11 @@ import Footer from "../Pages/Shared/Footer";
 
 const Root = () => {
     return (
-        <div className="">
+        <>
             <Header />
             <Outlet />
             <Footer />
-        </div>
+        </>
     );
 };
 
