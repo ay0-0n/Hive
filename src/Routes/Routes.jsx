@@ -1,6 +1,8 @@
 import {createBrowserRouter} from "react-router-dom";
 import Home from "../Pages/Home/Home";
 import Root from "../Layout/Root";
+import JoinUs from "../Pages/JoinUs/JoinUs";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([{
@@ -14,15 +16,11 @@ export const router = createBrowserRouter([{
         },
         {
             path: "/membership",
-            element: <p>member</p>,
-        },
-        {
-            path: "/login",
-            element: <p>login</p>,
+            element: <PrivateRoute><p>member</p></PrivateRoute>,
         },
         {
             path: "/join-us",
-            element: <p>join us</p>,
+            element: <JoinUs/>,
         }
     ],
 }]);
