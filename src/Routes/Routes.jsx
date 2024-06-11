@@ -3,6 +3,8 @@ import Home from "../Pages/Home/Home";
 import Root from "../Layout/Root";
 import JoinUs from "../Pages/JoinUs/JoinUs";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import Membership from "../Pages/Membership/Membership";
 
 
 export const router = createBrowserRouter([{
@@ -16,11 +18,15 @@ export const router = createBrowserRouter([{
         },
         {
             path: "/membership",
-            element: <PrivateRoute><p>member</p></PrivateRoute>,
+            element: <PrivateRoute><Membership/></PrivateRoute>,
         },
         {
             path: "/join-us",
             element: <JoinUs/>,
+        },
+        {
+            path: "/dashboard",
+            element: <PrivateRoute><Dashboard/></PrivateRoute>
         }
     ],
 }]);
