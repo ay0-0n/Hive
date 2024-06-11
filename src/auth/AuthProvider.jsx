@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, updateProfile , signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut} from "firebase/auth";
 import PropTypes from "prop-types";
 import auth from "../firebase/firebase.config";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 export const AuthContext = createContext(null);
@@ -10,21 +11,32 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) =>{
             setUser(currentUser);
-            setLoading(false);  
-            // if (currentUser) {
-            //     axios.post('https://node-blogs-lyart.vercel.app/jwt', email, {withCredentials: true})
-            // } else{
-            //   axios.post('https://node-blogs-lyart.vercel.app/logout', email, {withCredentials: true})
-            // }
+             
+            if (currentUser) {
+              // get token and store in client side
+              const user = {email: currentUser.email}
+              axiosPublic.post('/jwt', user)
+              .then(res => {
+                if(res.data.token){
+                  localStorage.setItem('token', res.data.token);
+                }
+              })
+            } else{
+              // remove token from client side
+              localStorage.removeItem('token');
+            }
+
+            setLoading(false); 
         })
         return () => {
             unSubscribe();
         }
-      },[])
+      },[user, axiosPublic])
 
       const createUser = (email, password) => {
         setLoading(true);
@@ -49,6 +61,7 @@ const AuthProvider = ({ children }) => {
 
     const logOut = () => {
         setLoading(true);
+        setUser(null);
         signOut(auth)
       };
 
