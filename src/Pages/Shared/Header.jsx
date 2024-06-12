@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { AiTwotoneNotification } from "react-icons/ai";
 import { MdDashboard } from "react-icons/md";
 import { RiHomeLine } from "react-icons/ri";
@@ -7,48 +7,14 @@ import { AuthContext } from "../../auth/AuthProvider";
 import { TbPremiumRights } from "react-icons/tb";
 import { GiTreeBeehive } from "react-icons/gi";
 import { IoLogOutSharp } from "react-icons/io5";
-
-const dummyAnnouncements = [
-  {
-    title: "New Feature Release",
-    authorName: "John Doe",
-    authorPhoto: "https://lh3.googleusercontent.com/-JVpfmGGJuO8/AAAAAAAAAAI/AAAAAAAAAME/sMJVq9F8gec/photo.jpg",
-    description: "We are excited to announce a new feature that will help you manage your tasks more efficiently.",
-    date: new Date().toISOString(),
-  },
-  {
-    title: "System Maintenance",
-    authorName: "Jane Smith",
-    authorPhoto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHT4h_4rkeA-eC6mfEMK0xzEIyBsULL6G2KA&s",
-    description: "Please be informed that there will be a system maintenance on Saturday, 10th June from 2 AM to 4 AM.",
-    date: new Date().toISOString(),
-  },
-  {
-    title: "System Maintenance",
-    authorName: "Jane Smith",
-    authorPhoto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHT4h_4rkeA-eC6mfEMK0xzEIyBsULL6G2KA&s",
-    description: "Please be informed that there will be a system maintenance on Saturday, 10th June from 2 AM to 4 AM.",
-    date: new Date().toISOString(),
-  },
-  {
-    title: "System Maintenance",
-    authorName: "Jane Smith",
-    authorPhoto: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHT4h_4rkeA-eC6mfEMK0xzEIyBsULL6G2KA&s",
-    description: "Please be informed that there will be a system maintenance on Saturday, 10th June from 2 AM to 4 AM.",
-    date: new Date().toISOString(),
-  },
-];
+import useAnnouncements from "../../hooks/useAnnouncements";
 
 const Header = () => {
   const location = useLocation();
   const { user, logOut } = useContext(AuthContext);
-  const [announcements, setAnnouncements] = useState([]);
+  const [announcements] = useAnnouncements();
 
 
-  useEffect(() => {
-    // Simulate fetching announcements
-    setAnnouncements(dummyAnnouncements);
-  }, []);
 
   return (
     <header className={`w-full bg-white  sticky top-0 z-50 h-[6.8vh] min-h-16 ${location.pathname.includes('/dashboard')? 'border-b-[1px] border-black border-opacity-70' : 'shadow-md shadow-gray-300'}`}>

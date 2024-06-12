@@ -9,6 +9,7 @@ import useAllPosts from "../../../hooks/useAllPosts";
 import useAllComments from "../../../hooks/useAllComments";
 import Swal from "sweetalert2";
 import useMyRecentPosts from "../../../hooks/useMyRecentPosts";
+import { AwesomeButton } from "react-awesome-button";
 
 const MyProfile = () => {
   const [isAdmin] = useAdmin();
@@ -103,7 +104,7 @@ const MyProfile = () => {
 
   return (
     <div className="min-w-full">
-      <div className="bg-cyan-900 w-full h-36 md:h-44 relative">
+      <div className="bg-cyan-900 w-full h-44 md:h-48 relative">
         <div className="text-center pt-5">
           <p className="text-3xl font-medium text-white">Profile</p>
           <p className="text-xl text-gray-300">Welcome to Hive.</p>
@@ -161,12 +162,11 @@ const MyProfile = () => {
               onChange={(e) => setAboutMe(e.target.value)}
               name="aboutMe"
             />
-            <button
-              className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-              type="submit"
-            >
-              Save
-            </button>
+
+              <AwesomeButton type="primary" className="" style={{
+                  "--button-primary-color": "#083344CC",
+                  "--button-primary-color-dark": "black",
+                  "--button-primary-color-hover": "#3d8b95" }}>Save                  </AwesomeButton>
           </form>
         ) : (
           <p className="mt-2 text-gray-600">
@@ -251,12 +251,10 @@ const MyProfile = () => {
               required
               className="p-2 border border-gray-300 rounded-md flex-grow bg-white shadow-inner"
             />
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-md"
-            >
-              Add Tag
-            </button>
+            <AwesomeButton type="primary" className="" style={{
+                  "--button-primary-color": "#083344CC",
+                  "--button-primary-color-dark": "black",
+                  "--button-primary-color-hover": "#3d8b95" }}>Add Tag                 </AwesomeButton>
           </form>
         </div>
       )}

@@ -1,0 +1,3 @@
+- Fix Annoucment card overflowing
+- Fix Anbnoucemnet cards Refetching() in header
+- Fix Announcement cards in header overflowing

@@ -32,23 +32,20 @@ const JoinUs = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname === "/join-us"?'/' : location.state?.from?.pathname;
   const [error, setError] = useState("");
   const axiosPublic = useAxiosPublic();
   const { uploadImage } = useUploadImage();
 
+
+  const from = location.state?.from?.pathname || '/';
+  
   const mutation = useMutation({
     mutationFn: (user) => {
       return axiosPublic.post("/users", user);
     },
     onSuccess: () => {
       setError("");
-      if (from === "/join-us"){
-        navigate("/");
-      }
-      else{
-        navigate(from);
-      }
+      navigate(from, { replace: true });
       Swal.fire({
         title: "Logged in successfully!",
         icon: "success",
@@ -64,12 +61,7 @@ const JoinUs = () => {
       logInWithEmailPass(data.email, data.password)
         .then(() => {
           setError("");
-          if (from === "/join-us"){
-            navigate("/");
-          }
-          else{
-            navigate(from);
-          }
+          navigate(from, { replace: true });
           Swal.fire({
             title: "Logged in successfully!",
             icon: "success",
@@ -215,7 +207,7 @@ const JoinUs = () => {
                   <div className="relative pt-4">
                     <label
                       htmlFor="photo"
-                      className=" bg-customBlue text-white py-2 rounded px-2 text-center cursor-pointer bottom-0 left-0 absolute"
+                      className=" text-customBlue bg-white border-2 border-customBlue py-2 rounded px-[6px] text-center cursor-pointer bottom-0 left-0 absolute"
                     >
                       Upload Photo
                     </label>

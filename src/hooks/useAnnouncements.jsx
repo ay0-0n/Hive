@@ -4,7 +4,7 @@ import useAxiosSecure from './useAxiosSecure';
 
 const useAnnouncements = () => {
     const axiosSecure = useAxiosSecure();
-    const {data : announcements = [], refetch} = useQuery({
+    const {data : announcements = [], refetch: announcemnetRefetch} = useQuery({
         queryKey: ['announcements',],
         queryFn: async () => {
             const res = await axiosSecure.get('/announcements');
@@ -13,7 +13,7 @@ const useAnnouncements = () => {
     }
     )
 
-    return [announcements, refetch]
+    return [announcements, announcemnetRefetch]
 };
 
 export default useAnnouncements;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAllMyPosts from "../../../hooks/useAllMyPosts";
-import {FaTrash, FaComment } from "react-icons/fa";
+import {FaTrash, FaComment, FaEye, FaEyeSlash } from "react-icons/fa";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { AwesomeButton } from "react-awesome-button";
 import { IoArrowDownCircle, IoArrowUpCircle } from "react-icons/io5";
@@ -38,6 +38,26 @@ const MyPosts = () => {
       }
     });
   };
+  const handleVisibility = (postId, visibility) => {
+    axiosPublic
+      .patch(`/post/visibility/${postId}`, {visibility})
+      .then((response) => {
+        if (response.status === 200) {
+
+          setMyPosts(myPosts.map((post) =>
+            post._id === postId ? { ...post, visibility: !post.visibility } : post
+          ));
+          Swal.fire("Success!", "Visibility updated", "success");
+        } else {
+          Swal.fire("Failed!", "Failed to update visibility", "error");
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating visibility:', error);
+        Swal.fire("Error!", "Something went wrong", "error");
+      });
+  };
+  
 
   const getTimeSince = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -67,18 +87,18 @@ const MyPosts = () => {
 
   return (
     <div className="min-w-full">
-      <div className="bg-cyan-900 w-full h-36 md:h-44 relative">
+      <div className="bg-cyan-900 w-full h-44 md:h-48 relative">
         <div className="text-center pt-5">
           <p className="text-3xl font-medium text-white">My Posts</p>
           <p className="text-xl text-gray-300">All your posts in one place</p>
         </div>
-        <div className="w-[90%] md:w-[80%] xl:w-[60%] mx-auto absolute left-1/2 transform -translate-x-1/2 top-24 md:top-28 bg-white rounded-xl max-w-[70rem] shadow-lg p-4">
+        <div className="w-[90%] md:w-[80%] xl:w-[60%] mx-auto absolute left-1/2 transform -translate-x-1/2 top-24 md:top-28 bg-white rounded-xl max-w-[70rem] shadow-lg p-4 border-2 border-gray-400">
           <table className="w-full">
             <thead>
-              <tr className="text-left border-b">
+              <tr className="text-left border-b-2 border-gray-300">
                 <th className="pb-4">Title</th>
                 <th className="hidden md:table-caption">Created</th>
-                <th className="hidden md:table-caption">Tag</th>
+                <th className="hidden md:table-cell">Tag</th>
                 <th>Votes</th>
                 <th>Actions</th>
               </tr>
@@ -92,7 +112,7 @@ const MyPosts = () => {
                 </tr>
               ) : (
                 myPosts.map((post) => (
-                  <tr key={post._id} className="border-b">
+                  <tr key={post._id} className="border-b-[1px] border-gray-300">
                     <td className="py-8 text-gray-900">{post.title}</td>
                     <td className="text-gray-900 hidden md:table-cell">{getTimeSince(post.dateAdded)}</td>
                     <td className="text-gray-900 hidden md:table-cell">{post.tag}</td>
@@ -112,6 +132,10 @@ const MyPosts = () => {
                   "--button-primary-color-dark": "#3d8b95",
                   "--button-primary-color-hover": "#3d8b95" }}><FaComment />                  </AwesomeButton>
                       </Link>
+                      <AwesomeButton onPress={() => handleVisibility(post._id, post.visibility)} type="primary">
+                        {post.visibility? <FaEye /> : <FaEyeSlash />}
+                      </AwesomeButton>
+                      
                       <AwesomeButton onPress={() => handleDelete(post._id)} type="danger">
                         <FaTrash />
                       </AwesomeButton>

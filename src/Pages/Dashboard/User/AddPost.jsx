@@ -68,13 +68,12 @@ const AddPost = () => {
       visibility: true,
     };
 
-    console.log("Submit Post:", newPost);
     mutation.mutate(newPost);
   };
 
   return (
     <div className="min-w-full">
-      <div className="bg-cyan-900 w-full h-36 md:h-44 relative">
+      <div className="bg-cyan-900 w-full h-44 md:h-48 relative">
         <div className="text-center pt-5">
           <p className="text-3xl font-medium text-white">Create Post</p>
           <p className="text-xl text-gray-300">Share your thoughts with Hive</p>
