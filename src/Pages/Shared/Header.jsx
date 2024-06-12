@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { AiTwotoneNotification } from "react-icons/ai";
 import { MdDashboard } from "react-icons/md";
 import { RiHomeLine } from "react-icons/ri";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../../auth/AuthProvider";
 import { TbPremiumRights } from "react-icons/tb";
 import { GiTreeBeehive } from "react-icons/gi";
@@ -40,8 +40,10 @@ const dummyAnnouncements = [
 ];
 
 const Header = () => {
+  const location = useLocation();
   const { user, logOut } = useContext(AuthContext);
   const [announcements, setAnnouncements] = useState([]);
+
 
   useEffect(() => {
     // Simulate fetching announcements
@@ -49,7 +51,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="w-full bg-white shadow-md shadow-gray-300">
+    <header className={`w-full bg-white  sticky top-0 z-50 h-[6.8vh] min-h-16 ${location.pathname.includes('/dashboard')? 'border-b-[1px] border-black border-opacity-70' : 'shadow-md shadow-gray-300'}`}>
       <nav className="container mx-auto">
         <section className="flex justify-between items-center">
           <div className="text-black flex flex-row justify-center items-center ml-2 md:ml-0 gap-1">
@@ -71,12 +73,12 @@ const Header = () => {
                       : ""
                   }
                 >
-                  <div className="justify-center items-center gap-1 px-2 py-5 hidden md:flex">
+                  <div className="justify-center items-center gap-1 px-2 py-5 hidden md:flex hover:bg-gray-300">
                     <RiHomeLine /> <span className="">Home</span>
                   </div>
                 </NavLink>
               </li>
-              <li className="hover:bg-gray-100 text-gray-700 rounded-xl flex justify-center items-center text-sm md:text-base">
+              <li className="text-gray-700 rounded-xl flex justify-center items-center text-sm md:text-base ">
                 <NavLink
                   to="/membership"
                   className={({ isActive }) =>
@@ -85,7 +87,7 @@ const Header = () => {
                       : ""
                   }
                 >
-                  <div className="flex justify-center items-center gap-1 px-2 py-5">
+                  <div className="flex justify-center items-center gap-1 px-2 py-5 hover:bg-gray-300">
                     <TbPremiumRights /> <span className="">Membership</span>
                   </div>
                 </NavLink>
@@ -114,7 +116,7 @@ const Header = () => {
                   </div>
                   <ul
                     tabIndex={0}
-                    className="mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content w-72 rounded-md bg-white border border-gray-300"
+                    className="mt-2 z-50 p-2 shadow menu menu-sm dropdown-content w-72 rounded-md bg-white border border-gray-300"
                   >
                     <li className="pointer-events-none">
                       <div className="text-lg font-semibold text-gray-700">Announcements</div>
@@ -157,7 +159,7 @@ const Header = () => {
                   </div>
                   <ul
                     tabIndex={0}
-                    className="mt-2 mr-1 z-[1] p-2 shadow menu menu-sm dropdown-content w-56 rounded-md bg-white border border-gray-300"
+                    className="mt-2 mr-1 z-50 p-2 shadow menu menu-sm dropdown-content w-56 rounded-md bg-white border border-gray-300"
                   >
                     <li className="pointer-events-none">
                       <div className="text-base text-black py-3">

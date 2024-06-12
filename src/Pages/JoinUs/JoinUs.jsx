@@ -1,20 +1,27 @@
-import { useState, useContext } from 'react';
-import { useForm } from 'react-hook-form';
-import { AuthContext } from '../../auth/AuthProvider';
-import coverImage from '../../assets/coverImage.jpg';
-import { MdReportGmailerrorred } from 'react-icons/md';
-import { FcGoogle } from 'react-icons/fc';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { useMutation } from '@tanstack/react-query';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
-import Swal from 'sweetalert2';
-import useUploadImage from '../../hooks/useUploadImage';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useState, useContext } from "react";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../../auth/AuthProvider";
+import coverImage from "../../assets/coverImage.jpg";
+import { MdReportGmailerrorred } from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+import useUploadImage from "../../hooks/useUploadImage";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const JoinUs = () => {
-  const { createUser, logInWithEmailPass, logInWithGoogle, profileUpdate, loading, setLoading } =
-    useContext(AuthContext);
+  const {
+    createUser,
+    logInWithEmailPass,
+    logInWithGoogle,
+    profileUpdate,
+    loading,
+    setLoading,
+  } = useContext(AuthContext);
+
   const {
     register,
     formState: { errors },
@@ -25,27 +32,27 @@ const JoinUs = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
-  const [error, setError] = useState('');
+  const from = location.state?.from?.pathname === "/join-us"?'/' : location.state?.from?.pathname;
+  const [error, setError] = useState("");
   const axiosPublic = useAxiosPublic();
   const { uploadImage } = useUploadImage();
 
   const mutation = useMutation({
     mutationFn: (user) => {
-      return axiosPublic.post('/users', user);
+      return axiosPublic.post("/users", user);
     },
     onSuccess: () => {
-      setError('');
+      setError("");
       navigate(from);
       Swal.fire({
-        title: 'Logged in successfully!',
-        icon: 'success',
-        confirmButtonText: 'Explore Hive',
-        confirmButtonColor: '#3D8B95',
+        title: "Logged in successfully!",
+        icon: "success",
+        confirmButtonText: "Explore Hive",
+        confirmButtonColor: "#3D8B95",
       });
     },
     onError: () => {
-      setError('Database error. Please try again later.');
+      setError("Database error. Please try again later.");
     },
   });
 
@@ -53,13 +60,13 @@ const JoinUs = () => {
     if (isLogin) {
       logInWithEmailPass(data.email, data.password)
         .then(() => {
-          setError('');
+          setError("");
           navigate(from);
           Swal.fire({
-            title: 'Logged in successfully!',
-            icon: 'success',
-            confirmButtonText: 'Explore Hive',
-            confirmButtonColor: '#3D8B95',
+            title: "Logged in successfully!",
+            icon: "success",
+            confirmButtonText: "Explore Hive",
+            confirmButtonColor: "#3D8B95",
           });
         })
         .catch((err) => {
@@ -68,13 +75,13 @@ const JoinUs = () => {
         });
     } else {
       if (data.confirmPassword !== data.password) {
-        setError('Password does not match');
+        setError("Password does not match");
         return;
       }
 
       const file = data.photo[0];
-      if (!file.type.startsWith('image/')) {
-        setError('Please upload a valid image file.');
+      if (!file.type.startsWith("image/")) {
+        setError("Please upload a valid image file.");
         return;
       }
 
@@ -83,7 +90,7 @@ const JoinUs = () => {
 
         createUser(data.email, data.password)
           .then(() => {
-            setError('');
+            setError("");
             profileUpdate({
               displayName: data.displaynName,
               photoURL: imgUrl,
@@ -93,7 +100,7 @@ const JoinUs = () => {
                   name: data.displaynName,
                   email: data.email,
                   photo: imgUrl,
-                  role: 'user',
+                  role: "user",
                   membership: false,
                   registerDate: new Date().toISOString(),
                 };
@@ -109,7 +116,7 @@ const JoinUs = () => {
             setLoading(false);
           });
       } catch (err) {
-        setError('Image upload failed. Please try again.');
+        setError("Image upload failed. Please try again.");
         setLoading(false);
       }
     }
@@ -133,6 +140,8 @@ const JoinUs = () => {
         setLoading(false);
       });
   };
+
+  loading && Swal.showLoading()
 
   return (
     <>
@@ -198,18 +207,18 @@ const JoinUs = () => {
                     required
                   />
                   <div className="relative pt-4">
-                  <label
-                    htmlFor="photo"
-                    className=" bg-customBlue text-white py-2 rounded px-2 text-center cursor-pointer bottom-0 left-0 absolute"
-                  >
-                    Upload Photo
-                  </label>
-                  <input
-                    type="file"
-                    {...register("photo", { required: true })}
-                    id="photo"
-                    className=" bg-white border-b-2 border-customBlue w-full pl-[1rem]"
-                  />
+                    <label
+                      htmlFor="photo"
+                      className=" bg-customBlue text-white py-2 rounded px-2 text-center cursor-pointer bottom-0 left-0 absolute"
+                    >
+                      Upload Photo
+                    </label>
+                    <input
+                      type="file"
+                      {...register("photo", { required: true })}
+                      id="photo"
+                      className=" bg-white border-b-2 border-customBlue w-full pl-[1rem]"
+                    />
                   </div>
                 </>
               )}
@@ -243,7 +252,7 @@ const JoinUs = () => {
                   className="absolute right-3 top-3 cursor-pointer"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEye/> : <FaEyeSlash />}
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </span>
               </div>
               {errors.password?.type === "minLength" && (
@@ -270,8 +279,7 @@ const JoinUs = () => {
                     className="absolute right-3 top-3 cursor-pointer"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
-                    {showConfirmPassword ? <FaEye/> : <FaEyeSlash />
-}
+                    {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>
               )}
@@ -285,17 +293,15 @@ const JoinUs = () => {
                   type="submit"
                   className="bg-customBlue py-2 text-white rounded-md w-full flex justify-center items-center"
                 >
-                  {loading ? (
-                    <span className="loading loading-infinity loading-md text-white"></span>
-                  ) : isLogin ? (
+                  {isLogin ? (
                     "Login"
                   ) : (
-                    "Sign Up"
-                  )}
+                    "Sign Up")
+                  }
                 </button>
               </div>
             </form>
-
+            
             <div className="divider pt-6">OR</div>
 
             <div className="flex justify-center mt-8 w-full">

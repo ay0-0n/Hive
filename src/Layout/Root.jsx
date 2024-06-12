@@ -4,7 +4,7 @@ import Footer from "../Pages/Shared/Footer";
 
 const Root = () => {
     const location = useLocation();
-    const footer = location.pathname === "/join-us" ? false : true;
+    const footer = location.pathname === "/join-us" || location.pathname.includes('/dashboard')? false : true;
     return (
         <>
             <Header />

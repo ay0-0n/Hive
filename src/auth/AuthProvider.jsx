@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) =>{
             setUser(currentUser);
-             
+            setLoading(false); 
             if (currentUser) {
               // get token and store in client side
               const user = {email: currentUser.email}
@@ -30,8 +30,6 @@ const AuthProvider = ({ children }) => {
               // remove token from client side
               localStorage.removeItem('token');
             }
-
-            setLoading(false); 
         })
         return () => {
             unSubscribe();
