@@ -43,12 +43,15 @@ const JoinUs = () => {
     },
     onSuccess: () => {
       setError("");
-      navigate(from);
+      if (from === "/join-us"){
+        navigate("/");
+      }
+      else{
+        navigate(from);
+      }
       Swal.fire({
         title: "Logged in successfully!",
         icon: "success",
-        confirmButtonText: "Explore Hive",
-        confirmButtonColor: "#3D8B95",
       });
     },
     onError: () => {
@@ -61,12 +64,15 @@ const JoinUs = () => {
       logInWithEmailPass(data.email, data.password)
         .then(() => {
           setError("");
-          navigate(from);
+          if (from === "/join-us"){
+            navigate("/");
+          }
+          else{
+            navigate(from);
+          }
           Swal.fire({
             title: "Logged in successfully!",
             icon: "success",
-            confirmButtonText: "Explore Hive",
-            confirmButtonColor: "#3D8B95",
           });
         })
         .catch((err) => {

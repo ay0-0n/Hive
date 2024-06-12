@@ -7,6 +7,11 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import Membership from "../Pages/Membership/Membership";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import AddPost from "../Pages/Dashboard/User/AddPost";
+import MyPosts from "../Pages/Dashboard/User/MyPosts";
+import Post from "../Pages/Post/Post";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import Reports from "../Pages/Dashboard/Admin/Reports";
+import Announcement from "../Pages/Dashboard/Admin/Announcement";
 
 
 export const router = createBrowserRouter([{
@@ -17,6 +22,10 @@ export const router = createBrowserRouter([{
         {
             path: "/",
             element: <Home/>,
+        },
+        {
+            path: '/post/:id',
+            element: <Post/>
         },
         {
             path: "/membership",
@@ -40,19 +49,19 @@ export const router = createBrowserRouter([{
                 },
                 {
                     path:'/dashboard/my-posts',
-                    element: <p>my-posts</p>
+                    element: <MyPosts/>
                 },
                 {
                     path:'/dashboard/manage-users',
-                    element: <p>manage-users</p>
+                    element: <ManageUsers/>
                 },
                 {
                     path:'/dashboard/reports',
-                    element: <p>reports</p>
+                    element: <Reports/>
                 },
                 {
                     path:'/dashboard/make-announcement',
-                    element: <p>announcement</p>
+                    element: <Announcement/>
                 },
             ]
 

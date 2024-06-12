@@ -18,7 +18,7 @@ const MyProfile = () => {
   const [users] = useAllUsers();
   const [posts] = useAllPosts(); 
   const [comments] = useAllComments(); 
-  const [myRecentPosts] = useMyRecentPosts(); // Implement this hook in the next task
+  const [myRecentPosts] = useMyRecentPosts(); 
 
   const [isEditingAboutMe, setIsEditingAboutMe] = useState(false);
   const [aboutMe, setAboutMe] = useState(user?.aboutMe || "");
@@ -30,8 +30,8 @@ const MyProfile = () => {
   const handleSaveAboutMe = async (e) => {
     e.preventDefault();
     try {
-      const res = await axiosSecure.patch(`/users/${user.email}/aboutMe`, { aboutMe });
-      if (res.status === 200) {
+      const res = await axiosSecure.patch(`/users/${user?.email}/aboutMe`, { aboutMe });
+      if (res?.status === 200) {
         Swal.fire({
           icon: "success",
           title: "About Me updated successfully",
@@ -51,7 +51,7 @@ const MyProfile = () => {
     const newTag = e.target.tag.value;
     try {
       const res = await axiosSecure.post("/admin/tag", { email: user?.email, name: newTag, dateAdded: new Date().toISOString() });
-      if (res.status === 201) {
+      if (res?.status === 201) {
         Swal.fire({
           icon: "success",
           title: "Tag added successfully",
@@ -59,7 +59,7 @@ const MyProfile = () => {
         e.target.reset();
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
+      if (error?.response?.status === 400) {
         Swal.fire({
           icon: "error",
           title: "Tag already exists",
@@ -73,10 +73,30 @@ const MyProfile = () => {
     }
   };
 
+  const timeSince = (date) => {
+    const now = new Date();
+    const secondsPast = (now.getTime() - new Date(date).getTime()) / 1000;
+    if (secondsPast < 60) {
+      return `${parseInt(secondsPast)} seconds ago`;
+    }
+    if (secondsPast < 3600) {
+      return `${parseInt(secondsPast / 60)} minutes ago`;
+    }
+    if (secondsPast <= 86400) {
+      return `${parseInt(secondsPast / 3600)} hours ago`;
+    }
+    if (secondsPast > 86400) {
+      const day = new Date(date).getDate();
+      const month = new Date(date).toLocaleString("default", { month: "short" });
+      const year = new Date(date).getFullYear() === now.getFullYear() ? "" : `, ${new Date(date).getFullYear()}`;
+      return `${month} ${day}${year}`;
+    }
+  };
+
   const data = [
-    { name: "Users", value: users.length },
-    { name: "Posts", value: posts.length },
-    { name: "Comments", value: comments.length },
+    { name: "Users", value: users?.length || 0 },
+    { name: "Posts", value: posts?.length || 0 },
+    { name: "Comments", value: comments?.length || 0 },
   ];
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
@@ -103,7 +123,7 @@ const MyProfile = () => {
               <p className="text-base text-gray-600">
                 Joined on{" "}
                 <span className="font-semibold">
-                  {new Date(user?.registerDate).toLocaleDateString()}
+                  {new Date(user?.registerDate)?.toLocaleDateString()}
                 </span>
               </p>
             </div>
@@ -156,28 +176,33 @@ const MyProfile = () => {
       </div>
 
       {!isAdmin && (
-  <div className="mt-12 w-[90%] md:w-[80%] xl:w-[60%] mx-auto max-w-[70rem]">
-    <h2 className="text-xl md:text-2xl font-semibold text-black">My Recent Posts</h2>
-    {myRecentPosts.length > 0 ? (
-      myRecentPosts.map((post, index) => (
-        <div key={index} className="bg-white border border-gray-300 rounded-xl p-4 mt-4 shadow-md flex gap-4">
-          <img src={user.photo} alt="User" className="w-12 h-12 rounded-full" />
-          <div>
-            <p className="text-lg font-semibold">{post.title}</p>
-            <p className="text-sm text-gray-500">{post.description}</p>
-            <span className="px-2 inline-block bg-gray-200 text-gray-700 rounded-full text-xs uppercase font-semibold mt-2">{post.tag}</span>
-          </div>
+        <div className="mt-12 w-[90%] md:w-[80%] xl:w-[60%] mx-auto max-w-[70rem]">
+          <h2 className="text-xl md:text-2xl font-semibold text-black">My Recent Posts</h2>
+          {myRecentPosts?.length > 0 ? (
+            myRecentPosts.map((post, index) => (
+              <div key={index} className="bg-white border border-gray-400 rounded-xl p-4 mt-4 shadow-md flex gap-4">
+                <img src={user?.photo} alt="User" className="w-12 h-12 rounded-full" />
+                <div>
+                  <p className="text-lg font-semibold text-black">{post?.title}</p>
+                  <p className="text-sm text-black opacity-95">{post?.description}</p>
+                  <div className="flex justify-between items-center mt-2 gap-6">
+                    <span className="text-xs text-gray-700">Posted {timeSince(post?.dateAdded)}</span>
+                    <span className="px-2 inline-block bg-gray-200 text-gray-700 rounded-full text-xs uppercase font-semibold">{post?.tag}</span>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 mt-4">No recent posts to show</p>
+          )}
         </div>
-      ))
-    ) : (
-      <p className="text-center text-gray-500 mt-4">No recent posts to show</p>
-    )}
-  </div>
-)}
+      )}
 
       {isAdmin && (
         <div className="mt-12 w-[90%] md:w-[80%] xl:w-[60%] mx-auto max-w-[70rem]">
-          <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center w-full gap-4">
+
+  
             <div className="w-full md:w-[49%] border-2 rounded-xl border-gray-400 flex flex-col justify-between p-6 bg-white shadow-md h-80">
               <div className="flex flex-col text-left mb-4">
                 <span className="text-3xl font-bold text-customBlue">{users?.length}</span>
@@ -192,7 +217,11 @@ const MyProfile = () => {
                 <span className="text-gray-600">Total Comments</span>
               </div>
             </div>
-            <div className="w-full md:w-[49%] border-2 rounded-xl border-gray-400 h-80 bg-white shadow-md">
+            
+
+
+
+            <div className="w-full md:w-[48%] bg-white border-2 border-gray-400 h-80 rounded-xl shadow-md p-4">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
