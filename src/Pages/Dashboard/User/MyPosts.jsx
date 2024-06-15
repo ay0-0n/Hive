@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import useAllMyPosts from "../../../hooks/useAllMyPosts";
-import {FaTrash, FaComment, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaTrash, FaComment, FaEye, FaEyeSlash } from "react-icons/fa";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { AwesomeButton } from "react-awesome-button";
 import { IoArrowDownCircle, IoArrowUpCircle } from "react-icons/io5";
@@ -12,7 +12,8 @@ const MyPosts = () => {
   const [allPosts] = useAllMyPosts();
 
   useEffect(() => {
-    setMyPosts(allPosts);
+    const sortedPosts = [...allPosts].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+    setMyPosts(sortedPosts);
   }, [allPosts]);
 
   const axiosPublic = useAxiosPublic();
@@ -38,15 +39,17 @@ const MyPosts = () => {
       }
     });
   };
+
   const handleVisibility = (postId, visibility) => {
     axiosPublic
-      .patch(`/post/visibility/${postId}`, {visibility})
+      .patch(`/post/visibility/${postId}`, { visibility })
       .then((response) => {
         if (response.status === 200) {
-
-          setMyPosts(myPosts.map((post) =>
-            post._id === postId ? { ...post, visibility: !post.visibility } : post
-          ));
+          setMyPosts(
+            myPosts.map((post) =>
+              post._id === postId ? { ...post, visibility: !post.visibility } : post
+            )
+          );
           Swal.fire("Success!", "Visibility updated", "success");
         } else {
           Swal.fire("Failed!", "Failed to update visibility", "error");
@@ -57,7 +60,6 @@ const MyPosts = () => {
         Swal.fire("Error!", "Something went wrong", "error");
       });
   };
-  
 
   const getTimeSince = (date) => {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -96,7 +98,7 @@ const MyPosts = () => {
           <table className="w-full">
             <thead>
               <tr className="text-left border-b-2 border-gray-300">
-                <th className="pb-4">Title</th>
+                <th>Title</th>
                 <th className="hidden md:table-caption">Created</th>
                 <th className="hidden md:table-cell">Tag</th>
                 <th>Votes</th>
@@ -113,34 +115,41 @@ const MyPosts = () => {
               ) : (
                 myPosts.map((post) => (
                   <tr key={post._id} className="border-b-[1px] border-gray-300">
-                    <td className="py-8 text-gray-900 overflow-x-clip max-w-20">{post.title}</td>
+                    <td className="py-8 text-gray-900 overflow-x-clip max-w-32">{post.title}</td>
                     <td className="text-gray-900 hidden md:table-cell">{getTimeSince(post.dateAdded)}</td>
                     <td className="text-gray-900 hidden md:table-cell">{post.tag}</td>
-                    <td className="flex flex-col md:flex-row justify-start items-center py-4">
-                      <div className="text-gray-900 flex flex-col justify-center items-center">
-                      <IoArrowUpCircle  className="text-3xl text-cyan-950" /> {post.upVote}
-                      </div>
-                      <div className="text-gray-900 flex flex-col justify-center items-center">
-                      <IoArrowDownCircle className="text-3xl text-cyan-950"/> {post.downVote}
+                    <td>
+                      <div className="flex flex-col md:flex-row justify-start items-center">
+                        <div className="text-gray-900 flex flex-col justify-center items-center">
+                          <IoArrowUpCircle className="text-3xl text-cyan-950" /> {post.upVote}
+                        </div>
+                        <div className="text-gray-900 flex flex-col justify-center items-center">
+                          <IoArrowDownCircle className="text-3xl text-cyan-950" /> {post.downVote}
+                        </div>
                       </div>
                     </td>
                     <td>
                       <div className="flex flex-col md:flex-row justify-start items-center gap-2">
-                      <Link to={`/post/${post._id}`}>
-                      <AwesomeButton type="primary" className="" style={{
-                  "--button-primary-color": "#083344D6",
-                  "--button-primary-color-dark": "#3d8b95",
-                  "--button-primary-color-hover": "#3d8b95" }}><FaComment />                  </AwesomeButton>
-                      </Link>
-                      <AwesomeButton onPress={() => handleVisibility(post._id, post.visibility)} type="primary">
-                        {post.visibility? <FaEye /> : <FaEyeSlash />}
-                      </AwesomeButton>
-                      
-                      <AwesomeButton onPress={() => handleDelete(post._id)} type="danger">
-                        <FaTrash />
-                      </AwesomeButton>
+                        <Link to={`/post/${post._id}`}>
+                          <AwesomeButton
+                            type="primary"
+                            className=""
+                            style={{
+                              "--button-primary-color": "#083344D6",
+                              "--button-primary-color-dark": "#3d8b95",
+                              "--button-primary-color-hover": "#3d8b95",
+                            }}
+                          >
+                            <FaComment />
+                          </AwesomeButton>
+                        </Link>
+                        <AwesomeButton onPress={() => handleVisibility(post._id, post.visibility)} type="primary">
+                          {post.visibility ? <FaEye /> : <FaEyeSlash />}
+                        </AwesomeButton>
+                        <AwesomeButton onPress={() => handleDelete(post._id)} type="danger">
+                          <FaTrash />
+                        </AwesomeButton>
                       </div>
-                      
                     </td>
                   </tr>
                 ))

@@ -11,12 +11,13 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import Select from 'react-select';
 import { FaLock, FaGlobe } from 'react-icons/fa';
-import { MdOutlineVisibility } from 'react-icons/md';
+import { FaTags } from 'react-icons/fa';
 
 const visibilityOptions = [
   { name: "Public", value: true, icon: <FaGlobe className="mr-2" /> },
   { name: "Private", value: false, icon: <FaLock className="mr-2" /> },
 ];
+const tagIcon = <span className="text-xl mr-2"><FaTags /></span>;
 
 const AddPost = () => {
   const [user] = useUser();
@@ -157,7 +158,9 @@ const AddPost = () => {
                     <Select
                       value={selectedTag}
                       onChange={setSelectedTag}
-                      options={tags.map(tag => ({ label: tag.name, value: tag.name }))}
+                      options={tags.map(tag => ({ 
+                        label: <div className="flex items-center">{tagIcon}{tag.name}</div>,
+                         value: tag.name }))}
                       className="text-gray-700 z-40 focus:outline-none focus:border-transparent"
                       placeholder="Select Tag"
                       styles={{
