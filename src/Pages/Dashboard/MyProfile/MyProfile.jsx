@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiPoliceBadgeFill, RiEditFill } from "react-icons/ri";
 import useAdmin from "../../../hooks/useAdmin";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -13,7 +13,7 @@ import { AwesomeButton } from "react-awesome-button";
 
 const MyProfile = () => {
   const [isAdmin] = useAdmin();
-  const [user] = useUser();
+  const [user, userRefetch] = useUser();
   const axiosSecure = useAxiosSecure();
 
   const [users] = useAllUsers();
@@ -23,6 +23,10 @@ const MyProfile = () => {
 
   const [isEditingAboutMe, setIsEditingAboutMe] = useState(false);
   const [aboutMe, setAboutMe] = useState(user?.aboutMe || "");
+
+  useEffect(() => {
+    setAboutMe(user?.aboutMe || "");
+  }, [isEditingAboutMe, user?.aboutMe, user]);
 
   const handleEditAboutMe = () => {
     setIsEditingAboutMe(!isEditingAboutMe);
@@ -38,6 +42,7 @@ const MyProfile = () => {
           title: "About Me updated successfully",
         });
         setIsEditingAboutMe(false);
+        userRefetch();
       }
     } catch (error) {
       Swal.fire({
@@ -155,7 +160,7 @@ const MyProfile = () => {
         {isEditingAboutMe ? (
           <form className="mt-4" onSubmit={handleSaveAboutMe}>
             <textarea
-              className="w-full p-2 border border-gray-300 rounded-md bg-white"
+              className="w-full p-2 border-b-2 border-customBlue focus:text-black focus:outline-none placeholder:text-black placeholder:text-opacity-50 bg-white"
               rows="3"
               placeholder="Write something about yourself"
               value={aboutMe}
@@ -163,10 +168,12 @@ const MyProfile = () => {
               name="aboutMe"
             />
 
-              <AwesomeButton type="primary" className="" style={{
+              <div className="flex w-full justify-end items-center">
+              <AwesomeButton type="primary" style={{
                   "--button-primary-color": "#083344CC",
                   "--button-primary-color-dark": "black",
                   "--button-primary-color-hover": "#3d8b95" }}>Save                  </AwesomeButton>
+              </div>
           </form>
         ) : (
           <p className="mt-2 text-gray-600">

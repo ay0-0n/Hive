@@ -10,11 +10,19 @@ import { useEffect, useState } from "react";
 import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import Select from 'react-select';
+import { FaLock, FaGlobe } from 'react-icons/fa';
+import { MdOutlineVisibility } from 'react-icons/md';
+
+const visibilityOptions = [
+  { name: "Public", value: true, icon: <FaGlobe className="mr-2" /> },
+  { name: "Private", value: false, icon: <FaLock className="mr-2" /> },
+];
 
 const AddPost = () => {
   const [user] = useUser();
   const [posts, refetch] = useAllPosts();
   const [tags] = useAllTags();
+
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const mutation = useMutation({
@@ -27,6 +35,7 @@ const AddPost = () => {
         title: "Post added successfully",
       });
       refetch();
+      reset();
     },
     onError: () => {
       Swal.fire({
@@ -40,10 +49,13 @@ const AddPost = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const [selectedTag, setSelectedTag] = useState(null);
+  const [selectedVisibility, setSelectedVisibility] = useState(null);
   const [userPostsCount, setUserPostsCount] = useState(posts?.filter((post) => post?.owner === user?.email).length);
+
   useEffect(() => {
     setUserPostsCount(posts?.filter((post) => post?.owner === user?.email).length);
   }, [posts, user?.email]);
@@ -65,7 +77,7 @@ const AddPost = () => {
       dateAdded: new Date().toISOString(),
       upVote: 0,
       downVote: 0,
-      visibility: true,
+      visibility: selectedVisibility.value.value,
     };
 
     mutation.mutate(newPost);
@@ -92,37 +104,72 @@ const AddPost = () => {
           ) : (
             <>
               <div className="flex items-center mb-4">
-                <img src={user?.photo} alt="User" className="w-10 h-10 rounded-full" />
-                <span className="ml-2 text-lg font-semibold">{user?.name}</span>
+                <div className="w-12 h-12 rounded-full border-customBlue border-2 flex justify-center items-center">
+                  <img src={user?.photo} alt="User" className="w-10 h-10 rounded-full" />
+                </div>
+                <div className="flex flex-col justify-start">
+                  <span className="ml-2 text-lg font-semibold leading-4">{user?.name}</span>
+                  <span className="ml-2 text-sm font-semibol text-black text-opacity-50">@{user?.email.split('@')[0]}</span>
+                </div>
               </div>
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <textarea
                   {...register("title", { required: "Title is required" })}
-                  placeholder="What's on your mind?"
-                  className="w-full p-2 border border-gray-300 rounded-md shadow-sm bg-gray-200 text-gray-700 focus:bg-gray-100"
-                  rows="2"
+                  placeholder="Add a title"
+                  className="w-full p-2 border-customBlue border-b-2 focus:text-black focus:outline-none placeholder:text-black placeholder:text-opacity-50 bg-white"
+                  rows="1"
                 />
                 {errors?.title && <p className="text-red-500">{errors.title.message}</p>}
 
                 <textarea
                   {...register("description", { required: "Description is required" })}
-                  placeholder="Add details"
+                  placeholder="Whats on your mind?"
                   rows="4"
-                  className="w-full p-2 border border-gray-300 rounded-md shadow-sm bg-gray-200 text-gray-700 focus:bg-gray-100"
+                  className="w-full p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 focus:outline-customBlue focus:outline-1 text-black placeholder:text-black placeholder:text-opacity-50"
                 />
                 {errors?.description && (
                   <p className="text-red-500">{errors.description.message}</p>
                 )}
 
-                <Select
-                  value={selectedTag}
-                  onChange={setSelectedTag}
-                  options={tags.map(tag => ({ label: tag.name, value: tag.name }))}
-                  className="text-gray-700 z-40"
-                  placeholder="Select Tag"
-                  required
-                />
-                {errors?.tag && <p className="text-red-500">Tag is required</p>}
+                <div className='flex justify-between'>
+                  <div className="w-[48%]">
+                    <Select
+                      value={selectedVisibility}
+                      onChange={setSelectedVisibility}
+                      options={visibilityOptions.map(option => ({
+                        label: <div className="flex items-center">{option.icon}{option.name}</div>,
+                        value: option 
+                      }))}
+                      className="text-gray-700 z-40 focus:outline-none focus:border-transparent"
+                      placeholder='Select Visibility'
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          borderColor: state.isFocused ? '#3D8B95' : '#3D8B95',
+                        }),
+                      }}
+                      required
+                    />
+                    {errors?.visibility && <p className="text-red-500">Visibility is required</p>}
+                  </div>
+
+                  <div className="w-[48%]">
+                    <Select
+                      value={selectedTag}
+                      onChange={setSelectedTag}
+                      options={tags.map(tag => ({ label: tag.name, value: tag.name }))}
+                      className="text-gray-700 z-40 focus:outline-none focus:border-transparent"
+                      placeholder="Select Tag"
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          borderColor: state.isFocused ? '#3D8B95' : '#3D8B95',
+                        }),
+                      }}
+                    />
+                    {errors?.tag && <p className="text-red-500">Tag is required</p>}
+                  </div>
+                </div>
 
                 <AwesomeButton type="primary" className="w-full px-4 py-2 text-white bg-cyan-950" style={{
                   "--button-primary-color": "#083344D6",

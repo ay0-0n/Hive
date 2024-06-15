@@ -12,12 +12,13 @@ import Post from "../Pages/Post/Post";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import Reports from "../Pages/Dashboard/Admin/Reports";
 import Announcement from "../Pages/Dashboard/Admin/Announcement";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 
 export const router = createBrowserRouter([{
     path: "/",
     element: <Root/>,
-    errorElement: <p>404</p>,
+    errorElement: <ErrorPage/>,
     children: [
         {
             path: "/",

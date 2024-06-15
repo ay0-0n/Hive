@@ -113,7 +113,7 @@ const MyPosts = () => {
               ) : (
                 myPosts.map((post) => (
                   <tr key={post._id} className="border-b-[1px] border-gray-300">
-                    <td className="py-8 text-gray-900">{post.title}</td>
+                    <td className="py-8 text-gray-900 overflow-x-clip max-w-20">{post.title}</td>
                     <td className="text-gray-900 hidden md:table-cell">{getTimeSince(post.dateAdded)}</td>
                     <td className="text-gray-900 hidden md:table-cell">{post.tag}</td>
                     <td className="flex flex-col md:flex-row justify-start items-center py-4">

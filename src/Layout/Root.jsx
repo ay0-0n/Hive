@@ -8,7 +8,7 @@ const Root = () => {
     return (
         <>
             <Header />
-            <Outlet />
+            <div className="pt-14"><Outlet /></div>
             {footer && <Footer />}
         </>
     );

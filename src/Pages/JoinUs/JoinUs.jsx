@@ -201,13 +201,13 @@ const JoinUs = () => {
                   <input
                     {...register("displaynName", { required: true })}
                     placeholder="Enter your name"
-                    className="w-full bg-white border-b-2 border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
+                    className="w-full bg-white border-b-[1.8px] border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
                     required
                   />
                   <div className="relative pt-4">
                     <label
                       htmlFor="photo"
-                      className=" text-customBlue bg-white border-2 border-customBlue py-2 rounded px-[6px] text-center cursor-pointer bottom-0 left-0 absolute"
+                      className=" text-customBlue bg-white border-[1.8px] border-customBlue py-2  px-[6px] border-l-white border-t-white text-center cursor-pointer bottom-0 left-0 absolute"
                     >
                       Upload Photo
                     </label>
@@ -215,7 +215,7 @@ const JoinUs = () => {
                       type="file"
                       {...register("photo", { required: true })}
                       id="photo"
-                      className=" bg-white border-b-2 border-customBlue w-full pl-[1rem]"
+                      className=" bg-white border-b-[1.8px] border-customBlue w-full pl-[1rem] pb-1 file-input-ghost ml-2"
                     />
                   </div>
                 </>
@@ -226,7 +226,7 @@ const JoinUs = () => {
                 })}
                 type="email"
                 placeholder="Enter your email"
-                className="w-full bg-white border-b-2 border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
+                className="w-full bg-white border-b-[1.8px] border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
                 required
               />
               {errors.email?.type === "pattern" && (
@@ -244,7 +244,7 @@ const JoinUs = () => {
                   })}
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter Password"
-                  className="w-full bg-white border-b-2 border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
+                  className="w-full bg-white border-b-[1.8px] border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
                 />
                 <span
                   className="absolute right-3 top-3 cursor-pointer"
@@ -270,7 +270,7 @@ const JoinUs = () => {
                     {...register("confirmPassword")}
                     type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirm Password"
-                    className="w-full bg-white border-b-2 border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
+                    className="w-full bg-white border-b-[1.8px] border-customBlue py-3 focus:outline-none focus:text-gray-700 text-gray-500 pl-2"
                     required
                   />
                   <span

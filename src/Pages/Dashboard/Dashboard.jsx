@@ -12,14 +12,16 @@ const Dashboard = () => {
   const toggleSidebar = () => {
     setExpanded(!expanded);
   };
+  const calculatedMinHeight = `calc(100vh - 3.5rem)`;
 
   return (
     <div className="relative flex w-full">
       <div
-        className={`min-h-[93.3vh] fixed bg-customBlue transition-all duration-300 ${
-          expanded ? "w-56 lg:w-64 xl:w-96" : "w-16"
-        }`}
-      >
+      className={`fixed bg-customBlue transition-all duration-300 ${
+        expanded ? "w-56 lg:w-64 xl:w-96" : "w-16"
+      }`}
+      style={{ minHeight: calculatedMinHeight }}
+    >
         <div className="h-full flex flex-col justify-between">
           <div className="pt-4 pl-2 space-y-4">
             <NavLink
@@ -99,7 +101,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div
-        className={`w-full min-h-[93.3vh] transition-all duration-300 ${
+        className={`w-full min-h-[100vh] pb-16 transition-all duration-300 ${
           expanded ? "ml-56 lg:ml-64 xl:ml-96" : "ml-16"
         }`}
       >
