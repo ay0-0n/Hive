@@ -123,7 +123,7 @@ const MyProfile = () => {
               </div>
             </div>
             <div>
-              <p className="text-xl md:text-2xl font-semibold text-black">
+              <p className={`text-xl md:text-2xl font-semibold text-black ${user?.membership && 'text-amber-500'}`}>
                 {user?.name}
               </p>
               <p className="text-base text-gray-600">{user?.email}</p>

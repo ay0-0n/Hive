@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiTwotoneNotification } from "react-icons/ai";
 import { MdDashboard } from "react-icons/md";
 import { RiHomeLine } from "react-icons/ri";
@@ -8,17 +8,32 @@ import { TbPremiumRights } from "react-icons/tb";
 import { GiTreeBeehive } from "react-icons/gi";
 import { IoLogOutSharp } from "react-icons/io5";
 import useAnnouncements from "../../hooks/useAnnouncements";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Header = () => {
   const location = useLocation();
-  const { user, logOut } = useContext(AuthContext);
+  const { user:currentUser, logOut } = useContext(AuthContext);
   const [announcements] = useAnnouncements();
+  const sortedAnnouncements = announcements.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const [isMember, setIsMember] = useState(false);
+  const axiosPublic = useAxiosPublic();
 
-
-
+  useEffect(() => {
+    if(currentUser) {
+      axiosPublic.get(`/user/${currentUser.email}`)
+      .then((res) => {
+        setIsMember(res.data.membership);
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+    }
+  }, [currentUser, axiosPublic]);
+  
+  
   return (
     <header className={`w-full bg-white fixed top-0 z-50 h-[6.8vh] min-h-16 ${location.pathname.includes('/dashboard')? 'border-b-[1px] border-black border-opacity-70' : 'shadow-md shadow-gray-300'}`}>
-      <nav className="container mx-auto">
+      <nav className="container mx-auto pt-2 md:pt-0">
         <section className="flex justify-between items-center">
           <div className="text-black flex flex-row justify-center items-center ml-2 md:ml-0 gap-1">
             <GiTreeBeehive className="text-customBlue text-3xl text" />
@@ -44,7 +59,7 @@ const Header = () => {
                   </div>
                 </NavLink>
               </li>
-              <li className="text-gray-700 rounded-xl flex justify-center items-center text-sm md:text-base ">
+              {!isMember && <li className="text-gray-700 rounded-xl flex justify-center items-center text-sm md:text-base ">
                 <NavLink
                   to="/membership"
                   className={({ isActive }) =>
@@ -57,11 +72,11 @@ const Header = () => {
                     <TbPremiumRights /> <span className="">Membership</span>
                   </div>
                 </NavLink>
-              </li>
+              </li>}
             </ul>
           </div>
           <div className="mr-2 md:mr-0">
-            {user ? (
+            {currentUser ? (
               <div className="flex justify-center items-center gap-2">
                 <div className="dropdown dropdown-end pr-3">
                   <div
@@ -92,15 +107,15 @@ const Header = () => {
                       <li className="text-gray-800 pt-2 pl-2 pointer-events-none">No Announcements Yet.</li>
                     ) : (
                       <div className="h-64 overflow-y-scroll">
-                        {announcements.map((announcement, index) => (
+                        {announcements && sortedAnnouncements.map((announcement, index) => (
                         <li key={index} className="py-2 px-2 hover:bg-gray-100 rounded-md transition duration-200 pointer-events-none">
                           <div className="flex items-start gap-3">
-                            <img
-                              src={announcement.authorPhoto}
-                              alt={announcement.authorName}
-                              className="w-10 h-10 rounded-full object-cover"
-                            />
-                            <div>
+                            <div className="avatar">
+                              <div className="w-6 rounded-xl">
+                                <img src={announcement.authorPhoto} />
+                              </div>
+                            </div>
+                            <div className="">
                               <h3 className="font-semibold text-customBlue">{announcement.title}</h3>
                               <p className="text-xs text-gray-500">By {announcement.authorName} on {new Date(announcement.date).toLocaleDateString()}</p>
                               <p className="text-sm text-gray-700 mt-1">{announcement.description}</p>
@@ -119,8 +134,8 @@ const Header = () => {
                     role="button"
                     className="btn btn-ghost btn-circle avatar"
                   >
-                    <div className="w-8 rounded-full">
-                      <img alt="user" src={user.photoURL} />
+                    <div className={`w-8 rounded-full ${isMember && 'ring ring-amber-500 ring-offset-2'}`}>
+                      <img alt="user" src={currentUser.photoURL} />
                     </div>
                   </div>
                   <ul
@@ -130,7 +145,7 @@ const Header = () => {
                     <li className="pointer-events-none">
                       <div className="text-base text-black py-3">
                         <span className="text-customBlue text-base">Hi,</span>
-                        {user.displayName}
+                        {currentUser.displayName}
                       </div>
                     </li>
                     <hr className="bg-gray-500 text-gray-500 h-[1.5px]" />

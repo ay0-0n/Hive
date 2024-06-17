@@ -89,10 +89,10 @@ const MyPosts = () => {
 
   return (
     <div className="min-w-full">
-      <div className="bg-cyan-900 w-full h-44 md:h-48 relative">
-        <div className="text-center pt-5">
-          <p className="text-3xl font-medium text-white">My Posts</p>
-          <p className="text-xl text-gray-300">All your posts in one place</p>
+      <div className="bg-cyan-900 w-full h-56 md:h-52 relative">
+        <div className="text-center pt-8">
+          <p className="text-xl md:text-3xl font-medium text-white">My Posts</p>
+          <p className="text-md md:text-xl text-gray-300">All your posts in one place</p>
         </div>
         <div className="w-[90%] md:w-[80%] xl:w-[60%] mx-auto absolute left-1/2 transform -translate-x-1/2 top-24 md:top-28 bg-white rounded-xl max-w-[70rem] shadow-lg p-4 border-2 border-gray-400">
           <table className="w-full">

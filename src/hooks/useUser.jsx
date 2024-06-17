@@ -8,6 +8,9 @@ const useUser = () => {
     
     const {user} = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
+    if(!user) return [null, null];
+
+    
     const {data, refetch} = useQuery({
         queryKey: ['user ',user.email],
         queryFn: async () => {

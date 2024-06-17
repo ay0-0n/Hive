@@ -13,6 +13,7 @@ import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
 import Reports from "../Pages/Dashboard/Admin/Reports";
 import Announcement from "../Pages/Dashboard/Admin/Announcement";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import Payment from "../Pages/Payment/Payment";
 
 
 export const router = createBrowserRouter([{
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([{
         {
             path: "/membership",
             element: <PrivateRoute><Membership/></PrivateRoute>,
+        },
+        {
+            path: "/payment",
+            element: <PrivateRoute><Payment/></PrivateRoute>,
         },
         {
             path: "/join-us",
