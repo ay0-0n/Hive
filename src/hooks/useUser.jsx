@@ -8,11 +8,10 @@ const useUser = () => {
     
     const {user} = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
-    if(!user) return [null, null];
 
     
-    const {data, refetch} = useQuery({
-        queryKey: ['user ',user.email],
+    const {data: userData = [], refetch} = useQuery({
+        queryKey: ['user ',user?.email],
         queryFn: async () => {
             const res = await axiosPublic.get(`/user/${user.email}`);
             return res.data
@@ -20,7 +19,7 @@ const useUser = () => {
     }
     )
 
-    return [data, refetch]
+    return [userData, refetch]
 };
 
 export default useUser;

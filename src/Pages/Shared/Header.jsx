@@ -32,10 +32,10 @@ const Header = () => {
   
   
   return (
-    <header className={`w-full bg-white fixed top-0 z-50 h-[6.8vh] min-h-16 ${location.pathname.includes('/dashboard')? 'border-b-[1px] border-black border-opacity-70' : 'shadow-md shadow-gray-300'}`}>
+    <header className={`w-full bg-white fixed top-0 z-[45] h-[6.8vh] min-h-16 ${location.pathname.includes('/dashboard')? 'border-b-[1px] border-black border-opacity-70' : 'shadow-md shadow-gray-300'}`}>
       <nav className="container mx-auto pt-2 md:pt-0">
         <section className="flex justify-between items-center">
-          <div className="text-black flex flex-row justify-center items-center ml-2 md:ml-0 gap-1">
+          <div className="text-black flex flex-row justify-center items-center ml-9 lg:ml-2 gap-1">
             <GiTreeBeehive className="text-customBlue text-3xl text" />
             <Link to="/">
               <span className="text-3xl font-medium text-black font-serif">

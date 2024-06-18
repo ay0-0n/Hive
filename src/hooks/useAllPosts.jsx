@@ -10,6 +10,7 @@ const useAllPosts = () => {
         },
     }
     )
+
     return [posts, refetch]
 
 };
