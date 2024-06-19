@@ -76,8 +76,6 @@ const AddPost = () => {
       tag: selectedTag?.value,
       owner: user?.email,
       dateAdded: new Date().toISOString(),
-      upVote: 0,
-      downVote: 0,
       visibility: selectedVisibility.value.value,
     };
 
@@ -110,7 +108,7 @@ const AddPost = () => {
                 </div>
                 <div className="flex flex-col justify-start">
                   <span className="ml-2 text-lg font-semibold leading-4">{user?.name}</span>
-                  <span className="ml-2 text-sm font-semibol text-black text-opacity-50">@{user?.email.split('@')[0]}</span>
+                  <span className="ml-2 text-sm font-semibol text-black text-opacity-50">@{user?.email?.split('@')[0]}</span>
                 </div>
               </div>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

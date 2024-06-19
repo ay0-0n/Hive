@@ -35,14 +35,16 @@ const Header = () => {
     <header className={`w-full bg-white fixed top-0 z-[45] h-[6.8vh] min-h-16 ${location.pathname.includes('/dashboard')? 'border-b-[1px] border-black border-opacity-70' : 'shadow-md shadow-gray-300'}`}>
       <nav className="container mx-auto pt-2 md:pt-0">
         <section className="flex justify-between items-center">
+        <Link to="/">
           <div className="text-black flex flex-row justify-center items-center ml-9 lg:ml-2 gap-1">
             <GiTreeBeehive className="text-customBlue text-3xl text" />
-            <Link to="/">
+            
               <span className="text-3xl font-medium text-black font-serif">
                 hive
               </span>
-            </Link>
+            
           </div>
+          </Link>
           <div>
             <ul className="flex flex-row text-black md:gap-8 text-2xl">
               <li className="hover:bg-gray-100 text-gray-700 rounded-xl flex justify-center items-center text-sm md:text-base">

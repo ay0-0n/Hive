@@ -8,6 +8,7 @@ import useAnnouncements from "../../hooks/useAnnouncements";
 import Banner from "./Banner";
 import Drawer from "./Drawer";
 import { RxHamburgerMenu } from "react-icons/rx";
+import PostList from "./PostList";
 
 export const HomeContext = createContext(null);
 
@@ -18,6 +19,7 @@ const Home = () => {
   const axiosPublic = useAxiosPublic();
   const [postToShow, setPostToShow] = useState();
   const [announcements] = useAnnouncements();
+  const [searching, setSearching] = useState('');
 
   const { refetch: postRefetch } = useQuery({
     queryKey: ["VisiblePosts"],
@@ -38,7 +40,6 @@ const Home = () => {
       return res.data;
     },
   });
-  console.log(postToShow);
 
   return (
     <HomeContext.Provider
@@ -52,6 +53,7 @@ const Home = () => {
         postSearch,
         postToShow,
         setPostToShow,
+        searching, setSearching
       }}
     >
       <section className="hidden lg:block container mx-auto">
@@ -59,9 +61,9 @@ const Home = () => {
             <div className="w-[25%] min-h-[93vh] bg-white border-r border-black sticky left-0 top-9">
                 <Drawer />
             </div>
-            <div className="w-[75%] h-[300rem] bg-red-200">
+            <div className="w-[75%]">
                 <Banner />
-                PAGES
+                <PostList />
             </div>
 
         </div>
@@ -70,8 +72,9 @@ const Home = () => {
       <section className="lg:hidden container mx-auto">
       <div className="drawer">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content h-[300rem]">
+        <div className="drawer-content">
           <Banner />
+          <PostList/>
           <label htmlFor="my-drawer" className="text-black text-xl drawer-button fixed top-[23px] smx:left-2 z-[60]">
           <RxHamburgerMenu />
           </label>

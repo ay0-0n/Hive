@@ -11,6 +11,7 @@ const Drawer = () => {
     tags,
     announcements,
     setPostToShow,
+    setSearching
   } = useContext(HomeContext);
 
   const sortedAnnouncements = announcements?.sort(
@@ -18,11 +19,13 @@ const Drawer = () => {
   );
 
   const handleTagClick = async (tag) => {
+    setSearching(tag)
     const res = await axiosPublic.get(`/posts/${tag}`);
     setPostToShow(res.data);
   }
 
   const handleSort = async (type) => {
+    setSearching(type=== "popularity" ? "Popular Posts" : "Most Commented Posts")
     const res = await axiosPublic.get(`/posts/sort/${type}`);
     setPostToShow(res.data);
   }
@@ -34,12 +37,12 @@ const Drawer = () => {
         <div className="collapse-title text-black opacity-70">Sort By</div>
         <div className="collapse-content">
           <div className="flex flex-col justify-center items-start space-y-4">
-            <button className="flex justify-center items-center gap-2" 
+            <button className="flex justify-center items-center gap-2 text-black" 
             onClick={()=>handleSort("popularity")}>
               <PiTrendUpBold />
               Popularity
             </button>
-            <button className="flex justify-center items-center gap-2"
+            <button className="flex justify-center items-center gap-2 text-black"
             onClick={()=>handleSort("comments")}>
               <BiCommentDetail />
               Comments
@@ -57,7 +60,7 @@ const Drawer = () => {
               tags.map((tag) => (
                 <button
                   key={tag._id}
-                  className="flex justify-center items-center gap-2" onClick={() => {handleTagClick(tag.name)}}
+                  className="flex justify-center items-center gap-2 text-black" onClick={() => {handleTagClick(tag.name)}}
                 >
                   <TiTags />
                   {tag.name}
@@ -76,7 +79,7 @@ const Drawer = () => {
               {sortedAnnouncements.map((announcement) => (
                 <div key={announcement._id}>
                   <div className="grid grid-cols-6 gap-4">
-                    <div className="row-span-2"><TfiAnnouncement className="pt-1"/></div>
+                    <div className="row-span-2"><TfiAnnouncement className="pt-1 text-black"/></div>
                     <div className="col-span-5">
                         <h3 className="text-black">{announcement.title}</h3>
                         <h4 className="text-black text-opacity-65 text-sm mt-2">Posted by {announcement.authorName} on  

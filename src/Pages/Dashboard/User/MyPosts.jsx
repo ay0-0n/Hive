@@ -1,22 +1,26 @@
-import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import useAllMyPosts from "../../../hooks/useAllMyPosts";
 import { FaTrash, FaComment, FaEye, FaEyeSlash } from "react-icons/fa";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { AwesomeButton } from "react-awesome-button";
 import { IoArrowDownCircle, IoArrowUpCircle } from "react-icons/io5";
+import useAllVotes from "../../../hooks/useAllVotes";
+import { useQuery } from "@tanstack/react-query";
+import useUser from "../../../hooks/useUser";
 
 const MyPosts = () => {
-  const [myPosts, setMyPosts] = useState([]);
-  const [allPosts] = useAllMyPosts();
-
-  useEffect(() => {
-    const sortedPosts = [...allPosts].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
-    setMyPosts(sortedPosts);
-  }, [allPosts]);
-
   const axiosPublic = useAxiosPublic();
+  const [user] = useUser();
+  const [votes] = useAllVotes();
+  
+  const {data: myPosts , refetch: myPostRefetch} = useQuery({
+    queryKey: [`MyPosts${user?.email}`],
+    queryFn: async () => {
+      console.log('user:',user)
+      const res = await axiosPublic.get(`/posts/mypost/${user.email}`);
+      return res.data;
+    }
+  })
 
   const handleDelete = (postId) => {
     Swal.fire({
@@ -31,7 +35,7 @@ const MyPosts = () => {
           .delete(`/post/${postId}`)
           .then(() => {
             Swal.fire("Deleted!", "Your post has been deleted.", "success");
-            setMyPosts(myPosts.filter((post) => post._id !== postId));
+            myPostRefetch();
           })
           .catch(() => {
             Swal.fire("Error!", "Something went wrong", "error");
@@ -45,11 +49,7 @@ const MyPosts = () => {
       .patch(`/post/visibility/${postId}`, { visibility })
       .then((response) => {
         if (response.status === 200) {
-          setMyPosts(
-            myPosts.map((post) =>
-              post._id === postId ? { ...post, visibility: !post.visibility } : post
-            )
-          );
+          myPostRefetch();
           Swal.fire("Success!", "Visibility updated", "success");
         } else {
           Swal.fire("Failed!", "Failed to update visibility", "error");
@@ -106,14 +106,14 @@ const MyPosts = () => {
               </tr>
             </thead>
             <tbody>
-              {myPosts.length === 0 ? (
+              {myPosts?.length === 0 ? (
                 <tr>
                   <td colSpan="4" className="text-center py-4 text-gray-500">
                     You have no posts yet.
                   </td>
                 </tr>
               ) : (
-                myPosts.map((post) => (
+                myPosts?.map((post) => (
                   <tr key={post._id} className="border-b-[1px] border-gray-300">
                     <td className="py-8 text-gray-900 overflow-x-clip max-w-32">{post.title}</td>
                     <td className="text-gray-900 hidden md:table-cell">{getTimeSince(post.dateAdded)}</td>
@@ -121,10 +121,10 @@ const MyPosts = () => {
                     <td>
                       <div className="flex flex-col md:flex-row justify-start items-center">
                         <div className="text-gray-900 flex flex-col justify-center items-center">
-                          <IoArrowUpCircle className="text-3xl text-cyan-950" /> {post.upVote}
+                          <IoArrowUpCircle className="text-3xl text-cyan-950" /> {votes.filter(vote => vote.postId === post._id && vote.voteType === 'up').length}
                         </div>
                         <div className="text-gray-900 flex flex-col justify-center items-center">
-                          <IoArrowDownCircle className="text-3xl text-cyan-950" /> {post.downVote}
+                          <IoArrowDownCircle className="text-3xl text-cyan-950" /> {votes.filter(vote => vote.postId === post._id && vote.voteType === 'down').length}
                         </div>
                       </div>
                     </td>
