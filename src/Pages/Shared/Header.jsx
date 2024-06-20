@@ -33,10 +33,10 @@ const Header = () => {
   
   return (
     <header className={`w-full bg-white fixed top-0 z-[45] h-[6.8vh] min-h-16 ${location.pathname.includes('/dashboard')? 'border-b-[1px] border-black border-opacity-70' : 'shadow-md shadow-gray-300'}`}>
-      <nav className="container mx-auto pt-2 md:pt-0">
-        <section className="flex justify-between items-center">
+      <nav className="container mx-auto pt-1 md:pt-0">
+        <section className={`flex justify-between items-center md:pt-0 ${!currentUser && 'p'}`}>
         <Link to="/">
-          <div className="text-black flex flex-row justify-center items-center ml-9 lg:ml-2 gap-1">
+          <div className={`text-black flex flex-row justify-center items-center lg:ml-0 gap-1 ${location.pathname === '/'? 'ml-9':'ml-2'}`}>
             <GiTreeBeehive className="text-customBlue text-3xl text" />
             
               <span className="text-3xl font-medium text-black font-serif">
@@ -173,7 +173,8 @@ const Header = () => {
               </div>
             ) : (
               <Link to="/join-us">
-                <button className="hover:before:bg-redborder-red-500 relative h-[45px] text-xl w-36 overflow-hidden border border-customBlue bg-white px-3 text-customBlue shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-customBlue before:transition-all before:duration-500 hover:text-white hover:before:left-0 hover:before:w-full">
+                <button className="hover:before:bg-redborder-red-500 relative 
+                h-[40px] text-md w-20 md:h-[45px] md:text-xl md:w-36 overflow-hidden border border-customBlue bg-white px-3 text-customBlue shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-customBlue before:transition-all before:duration-500 hover:text-white hover:before:left-0 hover:before:w-full">
                   <span className="relative z-10">Join us</span>
                 </button>
               </Link>

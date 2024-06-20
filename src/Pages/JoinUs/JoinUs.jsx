@@ -146,7 +146,7 @@ const JoinUs = () => {
       <Helmet>
         <title>Hive - JoinUs</title>
       </Helmet>
-      <div className="flex min-h-[95vh] bg-slate-100 justify-center items-center">
+      <div className="flex min-h-[95vh] bg-slate-100 justify-center items-center py-7">
         <div className="bg-white rounded-2xl shadow-lg flex flex-col md:flex-row justify-center max-w-4xl w-full min-h-[34rem] mx-5">
           <div className="w-full md:w-1/2 md:block relative">
             <img
@@ -155,10 +155,10 @@ const JoinUs = () => {
               className="w-full h-full rounded-t-2xl md:rounded-t-none md:rounded-l-2xl md:rounded-tl-2xl"
             />
             <div className="absolute inset-24 md:inset-44 flex flex-col justify-center items-center">
-              <h1 className="text-white text-2xl lg:text-3xl font-extrabold text-center">
+              <h1 className="text-white text-xl sm:text-2xl lg:text-3xl font-extrabold text-center">
                 A Community
               </h1>
-              <h1 className="text-white text-2xl lg:text-3xl font-extrabold text-center">
+              <h1 className="text-white text-xl sm:text-2xl lg:text-3xl font-extrabold text-center">
                 Like no other.
               </h1>
             </div>
