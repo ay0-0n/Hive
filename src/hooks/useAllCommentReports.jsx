@@ -3,17 +3,16 @@ import { useQuery } from '@tanstack/react-query'
 
 const useAllCommentReports = () => {
     const axiosPublic = useAxiosPublic();
-    const {data : commentsReports = [], refetch} = useQuery({
+    const {data : commentsReports = [], refetch:commentReportsRefetch} = useQuery({
         queryKey: ['AllCommentsReports',],
         queryFn: async () => {
             const res = await axiosPublic.get('/comments-reports');
-            console.log(res.data);
             return res.data
         },
     }
     )
 
-    return [commentsReports, refetch]
+    return [commentsReports, commentReportsRefetch]
 };
 
 export default useAllCommentReports;
