@@ -122,6 +122,7 @@ const PostList = () => {
             }><RxCross2 className='text-red-500'/></span></h2>}
             <hr className='border-customBlue border-[1px] ml-4 mt-2 w-56'/>
             <div className="p-4 lg:pr-0 min-h-[120vh]">
+                {currentPosts && currentPosts.length === 0 && <p className="text-lg text-gray-600">No posts found</p>}
                 {currentPosts && currentPosts.map(post => {
                     const owner = users.find(user => user.email === post.owner);
                     return (
