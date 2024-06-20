@@ -14,6 +14,7 @@ import Reports from "../Pages/Dashboard/Admin/Reports";
 import Announcement from "../Pages/Dashboard/Admin/Announcement";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Payment from "../Pages/Payment/Payment";
+import AdminRoute from "./AdminRoute";
 
 
 export const router = createBrowserRouter([{
@@ -59,15 +60,15 @@ export const router = createBrowserRouter([{
                 },
                 {
                     path:'/dashboard/manage-users',
-                    element: <ManageUsers/>
+                    element: <AdminRoute><ManageUsers/></AdminRoute>
                 },
                 {
                     path:'/dashboard/reports',
-                    element: <Reports/>
+                    element: <AdminRoute><Reports/></AdminRoute>
                 },
                 {
                     path:'/dashboard/make-announcement',
-                    element: <Announcement/>
+                    element: <AdminRoute><Announcement/></AdminRoute>
                 },
             ]
 
