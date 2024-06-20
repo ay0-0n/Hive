@@ -13,6 +13,7 @@ import {
   FaFacebookSquare,
   FaFacebookMessenger,
   FaTelegram,
+  FaComments,
 } from "react-icons/fa";
 import {
   FacebookShareButton,
@@ -243,6 +244,9 @@ const Post = () => {
                     .length
                 }
               </button>
+              <button className="flex justify-center items-center text-gray-500">
+                                    <FaComments className="mr-1" /> {comments.filter(comment => comment.postID === post._id).length}
+                                </button>
             </div>
             <div className="flex justify-center gap-3">
               <div>

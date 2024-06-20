@@ -154,7 +154,7 @@ const PostList = () => {
                                 </button>
                                 <Link to={`/post/${post._id}`} className="flex justify-center items-center text-gray-500">
                                 <button className="flex justify-center items-center text-gray-500">
-                                    <FaComments className="mr-1" /> {comments.filter(comment => comment.postId === post._id).length}
+                                    <FaComments className="mr-1" /> {comments.filter(comment => comment.postID === post._id).length}
                                 </button>
                                 </Link>
                                 </div>
