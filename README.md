@@ -3,7 +3,7 @@
 Welcome to the Forum MERN Stack Project! This project is an online platform where people can hold conversations in the form of posted messages. Developed using the MERN stack (MongoDB, Express.js, React.js, Node.js), this project serves as a comprehensive example of building a full-stack application with a focus on real-time updates, responsive design, and secure authentication.
 
 ## Admin Credentials
-- **Username:** admin
+- **Email:** admin@gmail.com
 - **Password:** admin@1234
 
 ## Live Site URL
