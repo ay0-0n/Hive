@@ -12,6 +12,7 @@ import 'react-awesome-button/dist/styles.css';
 import Select from 'react-select';
 import { FaLock, FaGlobe } from 'react-icons/fa';
 import { FaTags } from 'react-icons/fa';
+import { Helmet } from "react-helmet-async";
 
 const visibilityOptions = [
   { name: "Public", value: true, icon: <FaGlobe className="mr-2" /> },
@@ -84,6 +85,9 @@ const AddPost = () => {
 
   return (
     <div className="min-w-full">
+      <Helmet>
+        <title>Hive - Add Post</title>
+      </Helmet>
       <div className="bg-cyan-900 w-full h-56 md:h-52 relative">
         <div className="text-center pt-8">
           <p className="text-xl md:text-3xl font-medium text-white">Create Post</p>

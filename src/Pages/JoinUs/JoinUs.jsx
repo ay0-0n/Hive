@@ -207,7 +207,7 @@ const JoinUs = () => {
                   <div className="relative pt-4">
                     <label
                       htmlFor="photo"
-                      className=" text-customBlue bg-white border-[1.8px] border-customBlue py-2  px-[6px] border-l-white border-t-white text-center cursor-pointer bottom-0 left-0 absolute"
+                      className=" text-customBlue bg-white border-[1.8px] border-customBlue py-2  px-[10.5px] border-l-white border-t-white text-center cursor-pointer bottom-0 left-0 absolute"
                     >
                       Upload Photo
                     </label>

@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { AwesomeButton } from "react-awesome-button";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const Reports = () => {
   const [current, setCurrent] = useState("posts");
@@ -186,6 +187,9 @@ const Reports = () => {
 
   return (
     <div className="min-w-full">
+      <Helmet>
+        <title>Hive - Reports</title>
+      </Helmet>
       <div className="bg-cyan-900 w-full h-56 md:h-52 relative">
         <div className="text-center pt-8">
           <p className="text-xl md:text-3xl font-medium text-white">Reports</p>

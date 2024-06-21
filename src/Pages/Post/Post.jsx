@@ -247,18 +247,18 @@ const Post = () => {
               <img
                 src={postAuthor.photo}
                 alt={postAuthor.name}
-                className="w-12 h-12 rounded-full mr-4"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-full mr-4"
               />
               <div>
-                <h2 className="text-xl font-bold text-black">
+                <h2 className="text-lg md:text-xl font-bold text-black">
                   {postAuthor.name}
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-sm md:text-base">
                   @{postAuthor.email.split("@")[0]}
                 </p>
               </div>
             </div>
-            <h3 className="text-2xl font-semibold mb-2 text-black">
+            <h3 className="text-xl md:text-2xl font-semibold mb-2 text-black">
               {post.title}
             </h3>
             <p className="text-gray-700 mb-4">{post.description}</p>

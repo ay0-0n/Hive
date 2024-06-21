@@ -2,7 +2,7 @@ import axios from "axios";
 
 const useAxiosPublic = () => {
     const axiosPublic = axios.create({
-        baseURL: 'http://localhost:3000'
+        baseURL: 'https://hive-forum.vercel.app'
     });
 
     return axiosPublic;

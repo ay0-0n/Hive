@@ -9,6 +9,7 @@ import Banner from "./Banner";
 import Drawer from "./Drawer";
 import { RxHamburgerMenu } from "react-icons/rx";
 import PostList from "./PostList";
+import { Helmet } from "react-helmet-async";
 
 export const HomeContext = createContext(null);
 
@@ -56,6 +57,9 @@ const Home = () => {
         searching, setSearching
       }}
     >
+      <Helmet>
+        <title>Hive - Home</title>
+      </Helmet>
       <section className="hidden lg:block container mx-auto">
         <div className="flex justify-between">
             <div className="w-[25%] min-h-[93vh] bg-white border-r border-black sticky left-0 top-9">

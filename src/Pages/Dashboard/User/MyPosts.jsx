@@ -7,6 +7,7 @@ import { IoArrowDownCircle, IoArrowUpCircle } from "react-icons/io5";
 import useAllVotes from "../../../hooks/useAllVotes";
 import { useQuery } from "@tanstack/react-query";
 import useUser from "../../../hooks/useUser";
+import { Helmet } from "react-helmet-async";
 
 const MyPosts = () => {
   const axiosPublic = useAxiosPublic();
@@ -89,6 +90,9 @@ const MyPosts = () => {
 
   return (
     <div className="min-w-full">
+      <Helmet>
+        <title>Hive - My Posts</title>
+      </Helmet>
       <div className="bg-cyan-900 w-full h-56 md:h-52 relative">
         <div className="text-center pt-8">
           <p className="text-xl md:text-3xl font-medium text-white">My Posts</p>

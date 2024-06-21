@@ -10,6 +10,8 @@ import useAllComments from "../../../hooks/useAllComments";
 import Swal from "sweetalert2";
 import useMyRecentPosts from "../../../hooks/useMyRecentPosts";
 import { AwesomeButton } from "react-awesome-button";
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
 const MyProfile = () => {
   const [isAdmin] = useAdmin();
@@ -110,6 +112,9 @@ const MyProfile = () => {
 
   return (
     <div className="min-w-full">
+      <Helmet>
+        <title>Hive - Profile</title>
+      </Helmet>
       <div className="bg-cyan-900 w-full h-56 md:h-52 relative">
         <div className="text-center pt-8">
           <p className="text-xl md:text-3xl font-medium text-white">Profile</p>
@@ -188,17 +193,19 @@ const MyProfile = () => {
           <h2 className="text-xl md:text-2xl font-semibold text-black">My Recent Posts</h2>
           {myRecentPosts?.length > 0 ? (
             myRecentPosts.map((post, index) => (
-              <div key={index} className="bg-white border border-gray-400 rounded-xl p-4 mt-4 shadow-md flex gap-4">
+              <Link to={`/post/${post._id}`} key={index}>
+              <div className="bg-white border border-gray-400 rounded-xl p-4 mt-4 shadow-md flex gap-4 w-full">
                 <img src={user?.photo} alt="User" className="w-12 h-12 rounded-full" />
-                <div>
+                <div className="w-full">
                   <p className="text-lg font-semibold text-black">{post?.title}</p>
                   <p className="text-sm text-black opacity-95">{post?.description}</p>
-                  <div className="flex justify-between items-center mt-2 gap-6">
+                  <div className="flex justify-between w-full items-center mt-2 gap-6">
                     <span className="text-xs text-gray-700">Posted {timeSince(post?.dateAdded)}</span>
                     <span className="px-2 inline-block bg-gray-200 text-gray-700 rounded-full text-xs uppercase font-semibold">{post?.tag}</span>
                   </div>
                 </div>
               </div>
+              </Link>
             ))
           ) : (
             <p className="text-center text-gray-500 mt-4">No recent posts to show</p>

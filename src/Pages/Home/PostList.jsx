@@ -112,7 +112,7 @@ const PostList = () => {
     return (
         <>
             <h1 className=" font-semibold pl-4 mt-6 text-3xl text-black">Posts</h1>
-            {searching && <h2 className="text-lg mb-4 pl-4 text-gray-600 flex justify-start items-center gap-1">
+            {searching && <h2 className="text-sm md:text-lg mb-4 pl-4 text-gray-600 flex justify-start items-center gap-1">
             <MdManageSearch />Showing Results for: <span className='text-black font-semibold'>
             {searching}</span><span className=' cursor-pointer' onClick={
                 () => {

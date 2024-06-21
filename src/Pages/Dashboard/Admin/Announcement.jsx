@@ -8,6 +8,7 @@ import 'react-awesome-button/dist/styles.css';
 import { AiFillDelete } from "react-icons/ai";
 import { formatDistanceToNow } from 'date-fns';
 import useAnnouncements from "../../../hooks/useAnnouncements";
+import { Helmet } from "react-helmet-async";
 
 const Announcement = () => {
   const [user] = useUser();
@@ -89,6 +90,9 @@ const Announcement = () => {
 
   return (
     <div className="min-w-full">
+      <Helmet>
+        <title>Hive - Announcemnts</title>
+      </Helmet>
       <div className="bg-cyan-900 w-full h-56 md:h-52 relative">
         <div className="text-center pt-8">
           <p className="text-xl md:text-3xl font-medium text-white">Create Announcement</p>

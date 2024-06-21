@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { IoIosSearch, IoMdClose } from "react-icons/io";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const ManageUsers = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -118,6 +119,9 @@ const ManageUsers = () => {
 
   return (
     <div className="min-w-full">
+      <Helmet>
+        <title>Hive - Users</title>
+      </Helmet>
       <div className="bg-cyan-900 w-full h-56 md:h-52 relative">
         <div className="text-center pt-8">
           <p className="text-xl md:text-3xl  font-medium text-white">
