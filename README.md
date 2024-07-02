@@ -10,7 +10,7 @@ Welcome to the Forum MERN Stack Project! This project is an online platform wher
 - **Password:** admin@1234
 
 ## Server Side Repo
-- [Server Side Repositiry](https://hive-forum.vercel.app/)
+- [Server Side Repositiry](https://github.com/ay0-0n/Hive-ServerSide)
 
 ## Key Features
 - **Responsive Design**: The application is fully responsive and optimized for mobile, tablet, and desktop views.
