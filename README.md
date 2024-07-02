@@ -66,3 +66,6 @@ Welcome to the Forum MERN Stack Project! This project is an online platform wher
 4. **Run**:
    ```bash
    npm run dev
+
+## Intersting Roadblock
+Before making this project, I had no idea how to store images that users uploads. The thing is in my previous projects I used to take img url and save the url to the database to solve this problem. But it didn't feel optimal. I came to know that images can be saved to the database also. But what I wanted is to take the image but save the url of that image in the database instead of the raw image. Thats how I found imgBB api. I also for the first time worked with stripe payment gateway, which is really cool. 
