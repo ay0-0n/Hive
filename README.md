@@ -2,13 +2,15 @@
 
 Welcome to the Forum MERN Stack Project! This project is an online platform where people can hold conversations in the form of posted messages. Developed using the MERN stack (MongoDB, Express.js, React.js, Node.js), this project serves as a comprehensive example of building a full-stack application with a focus on real-time updates, responsive design, and secure authentication.
 
+## Live Site URL
+- [Live Link](https://hive-23537.web.app/)
+
 ## Admin Credentials
 - **Email:** admin@gmail.com
 - **Password:** admin@1234
 
-## Live Site URL
-- [Client Side](https://hive-23537.web.app/)
-- [Server Side](https://hive-forum.vercel.app/)
+## Server Side Repo
+- [Server Side Repositiry](https://hive-forum.vercel.app/)
 
 ## Key Features
 - **Responsive Design**: The application is fully responsive and optimized for mobile, tablet, and desktop views.
@@ -58,6 +60,9 @@ Welcome to the Forum MERN Stack Project! This project is an online platform wher
 
 2. **Create .env files**
 
-3. **Install Dependencies on Backend and Frontend**:
+3. **Install Dependencies**:
    ```bash
    npm install
+4. **Run**:
+   ```bash
+   npm run dev

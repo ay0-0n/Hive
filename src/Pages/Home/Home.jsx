@@ -89,7 +89,7 @@ const Home = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <ul className="menu p-4 w-60 sm:w-72 min-h-full bg-base-200 text-base-content">
+          <ul className="menu p-4 w-60 sm:w-72 min-h-full text-base-content bg-white">
             <Drawer/>
           </ul>
         </div>

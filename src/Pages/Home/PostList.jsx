@@ -30,6 +30,7 @@ const PostList = () => {
             return res.data;
         },
     });
+    console.log(myVotes);
 
     const [users] = useAllUsers();
     const {user:currentUser} = useContext(AuthContext);
@@ -147,7 +148,7 @@ const PostList = () => {
                             <hr />
                             <div className="flex py-3 justify-between">
                                 <div className='flex flex-row justify-start items-center gap-6'>
-                                <button className={`flex justify-center items-center text-gray-500 ${myVotes.find(vote => vote.postId === post._id)?.voteType === 'up' ? 'text-blue-500' : ''}`}  onClick={() => handleVote(post._id, "up")}>
+                                <button className={`flex justify-center items-center text-gray-500 ${myVotes.find(vote => vote.postId === post._id)?.voteType === "up" &&'text-blue-500'}`}  onClick={() => handleVote(post._id, "up")}>
                                     <FaThumbsUp className="mr-1" /> {votes.filter(vote => vote.postId === post._id && vote.voteType === 'up').length}
                                 </button>
                                 <button className={`flex justify-center items-center text-gray-500 ${myVotes.find(vote => vote.postId === post._id)?.voteType === 'down' ? 'text-red-500' : ''}`} onClick={() => handleVote(post._id, "down")}>
